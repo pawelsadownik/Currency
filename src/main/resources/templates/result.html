@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href='style.css' >
+
+</head>
+<body>
+<div class="result">
+<p th:text="'CURRENCY: ' + ${code} " />
+<p th:text="'Average for BID: ' + ${average} " />
+<p th:text="'Standard deviation for ASK: ' + ${deviation} " />
+
+<a href="/index">Back</a><br>
+</div>
+</body>
+</html>
