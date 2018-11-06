@@ -4,7 +4,6 @@ package com.example.demo;
 import com.example.demo.calculations.CalculateCurrency;
 import com.example.demo.model.CurrencyData;
 import com.example.demo.model.InputData;
-import com.example.demo.model.OutputData;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +31,7 @@ public class IndexController {
     }
 
     @PostMapping("/index")
-    public String getResult (@ModelAttribute CurrencyData currencyData, OutputData outputData, InputData inputData, Model model){
+    public String getResult (@ModelAttribute CurrencyData currencyData, InputData inputData, Model model){
 
         URL = new StringBuilder()
                 .append(URL)
