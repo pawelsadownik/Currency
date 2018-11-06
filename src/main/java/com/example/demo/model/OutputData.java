@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 
 public class OutputData {
 
-
+/*
     private BigDecimal averageBidRate;
-    private BigDecimal standardDeviationBid;
     private BigDecimal averageAskRate;
     private BigDecimal standardDeviationAsk;
 
@@ -18,13 +17,6 @@ public class OutputData {
         this.averageBidRate = averageBidRate;
     }
 
-    public BigDecimal getStandardDeviationBid() {
-        return standardDeviationBid;
-    }
-
-    public void setStandardDeviationBid(BigDecimal standardDeviationBid) {
-        this.standardDeviationBid = standardDeviationBid;
-    }
 
     public BigDecimal getAverageAskRate() {
         return averageAskRate;
@@ -41,5 +33,5 @@ public class OutputData {
     public void setStandardDeviationAsk(BigDecimal standardDeviationAsk) {
         this.standardDeviationAsk = standardDeviationAsk;
     }
-
+*/
 }

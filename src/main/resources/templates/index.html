@@ -15,7 +15,7 @@
     <script type="text/javascript">
         var datefield=document.createElement("input")
         datefield.setAttribute("type", "date")
-        if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+        if (datefield.type!="date"){
             document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
             document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
             document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
@@ -23,13 +23,13 @@
     </script>
 
     <script>
-        if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
-            jQuery(function($){ //on document.ready
+        if (datefield.type!="date"){
+            jQuery(function($){
                 $('#begin').datepicker();
             })
         }
-        if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
-            jQuery(function($){ //on document.ready
+        if (datefield.type!="date"){
+            jQuery(function($){
                 $('#end').datepicker();
             })
         }

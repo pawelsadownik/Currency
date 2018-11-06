@@ -12,46 +12,39 @@ import static org.junit.Assert.*;
 
 public class CalculateCurrencyTest {
 
+    CurrencyData currencyData = new CurrencyData();
+    CalculateCurrency calculateCurrency = new CalculateCurrency();
 
-    @Test
-    public void getAverage() {
+        @Before
+        public void setValues() {
 
-        //given
-        CurrencyData currencyData = new CurrencyData();
+            Rates firstValue = new Rates("EUR", "date", new BigDecimal("4.1943"), new BigDecimal("4.2791"));
+            Rates secondValue = new Rates("EUR", "date", new BigDecimal("4.1903"), new BigDecimal("4.2749"));
+            Rates thirdValue = new Rates("EUR", "date", new BigDecimal("4.182"), new BigDecimal("4.2664"));
+            Rates fourthValue = new Rates("EUR", "date", new BigDecimal("4.1721"), new BigDecimal("4.2563"));
+            Rates fifthValue = new Rates("EUR", "date", new BigDecimal("4.1688"), new BigDecimal("4.253"));
 
-        Rates firstValue = new Rates();
-        Rates secondValue = new Rates();
-        Rates thirdValue = new Rates();
-        Rates fourthValue = new Rates();
-        Rates fifthValue = new Rates();
+            List<Rates> ratesList = Arrays.asList(firstValue, secondValue, thirdValue, fourthValue, fifthValue);
+            currencyData.setRatesList(ratesList);
+        }
 
-        firstValue.setBid(new BigDecimal("4.1943"));
-        secondValue.setBid(new BigDecimal("4.1903"));
-        thirdValue.setBid(new BigDecimal("4.182"));
-        fourthValue.setBid(new BigDecimal("4.1721"));
-        fifthValue.setBid(new BigDecimal("4.1688"));
+        @Test
+        public void getAverage() {
+            //when
+            BigDecimal averageBid = calculateCurrency.getAverageBidRate(currencyData);
+            BigDecimal testValue = new BigDecimal ("4.1815");
 
-        firstValue.setAsk(new BigDecimal("4.2791"));
-        secondValue.setAsk(new BigDecimal("4.2749"));
-        thirdValue.setAsk(new BigDecimal("4.2664"));
-        fourthValue.setAsk(new BigDecimal("4.2563"));
-        fifthValue.setAsk(new BigDecimal("4.253"));
+            //then
+            assertEquals(testValue.stripTrailingZeros(), averageBid.stripTrailingZeros());
+        }
 
-        List<Rates> ratesList = Arrays.asList(firstValue, secondValue, thirdValue, fourthValue, fifthValue);
+        @Test
+        public void getStandardDeviation() {
+            //when
+            BigDecimal deviationAsk = calculateCurrency.getStandardDeviationAsk(currencyData);
+            BigDecimal testValue = new BigDecimal ("0.0101");
 
-        currencyData.setRatesList(ratesList);
-
-        //when
-        CalculateCurrency calculateCurrency = new CalculateCurrency();
-
-        BigDecimal averageBid = calculateCurrency.getAverageBidRate(currencyData);
-        BigDecimal deviationAsk = calculateCurrency.getStandardDeviationAsk(currencyData);
-
-        //then
-        assertTrue(averageBid.equals("4.1815"));
-        assertTrue(deviationAsk.equals(0.0101));
-
-
+            //then
+            assertEquals(testValue.stripTrailingZeros(), deviationAsk.stripTrailingZeros());
     }
-
 }

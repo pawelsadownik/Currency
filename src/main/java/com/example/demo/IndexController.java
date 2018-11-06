@@ -21,8 +21,6 @@ public class IndexController {
 
     RestTemplate restTemplate = new RestTemplate();
     HttpHeaders httpHeaders = new HttpHeaders();
-    HttpEntity <String> entity = new HttpEntity<String>(httpHeaders);
-
 
     private String URL = "http://api.nbp.pl/api/exchangerates/rates/c/";
 
@@ -30,9 +28,7 @@ public class IndexController {
     public String getIndex(Model model)  {
 
         model.addAttribute("inputData", new InputData());
-
         return "index";
-
     }
 
     @PostMapping("/index")
@@ -50,21 +46,22 @@ public class IndexController {
         httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity <String> entity = new HttpEntity<String>(httpHeaders);
 
+        try {
+            ResponseEntity<CurrencyData> response = restTemplate.exchange(URL, HttpMethod.GET, entity, CurrencyData.class);
+            CurrencyData currencyDataResponseBody  = response.getBody();
+            CalculateCurrency calculateCurrency = new CalculateCurrency();
 
-        ResponseEntity<CurrencyData> response = restTemplate.exchange(URL, HttpMethod.GET, entity, CurrencyData.class);
-        CurrencyData currencyDataResponseBody  = response.getBody();
-        CalculateCurrency calculateCurrency = new CalculateCurrency();
+            BigDecimal avegareBidRate = calculateCurrency.getAverageBidRate(currencyDataResponseBody);
+            BigDecimal standardDeviationAsk = calculateCurrency.getStandardDeviationAsk(currencyDataResponseBody);
 
-        BigDecimal avegareBidRate = calculateCurrency.getAverageBidRate(currencyDataResponseBody);
-        BigDecimal standardDeviationAsk = calculateCurrency.getStandardDeviationAsk(currencyDataResponseBody);
-        String code = currencyDataResponseBody.getCode();
+            String code = currencyDataResponseBody.getCode();
 
-        model.addAttribute("average", avegareBidRate);
-        model.addAttribute("deviation",standardDeviationAsk);
-        model.addAttribute("code", code);
-
-        if (response.getStatusCode() != HttpStatus.OK) {
-            System.out.println("(API problem");
+            model.addAttribute("average", avegareBidRate);
+            model.addAttribute("deviation",standardDeviationAsk);
+            model.addAttribute("code", code);
+        }
+            catch (Exception exception){
+            return "apifailure";
         }
 
         return "result";
