@@ -21,7 +21,7 @@ public class IndexController {
     RestTemplate restTemplate = new RestTemplate();
     HttpHeaders httpHeaders = new HttpHeaders();
 
-    private String URL = "http://api.nbp.pl/api/exchangerates/rates/c/";
+    private final String URL = "http://api.nbp.pl/api/exchangerates/rates/c/";
 
     @GetMapping ("/index")
     public String getIndex(Model model)  {
@@ -33,7 +33,7 @@ public class IndexController {
     @PostMapping("/index")
     public String getResult (@ModelAttribute CurrencyData currencyData, InputData inputData, Model model){
 
-        URL = new StringBuilder()
+       String newURL = new StringBuilder()
                 .append(URL)
                 .append(inputData.getCode())
                 .append("/")
@@ -46,7 +46,7 @@ public class IndexController {
         HttpEntity <String> entity = new HttpEntity<String>(httpHeaders);
 
         try {
-            ResponseEntity<CurrencyData> response = restTemplate.exchange(URL, HttpMethod.GET, entity, CurrencyData.class);
+            ResponseEntity<CurrencyData> response = restTemplate.exchange(newURL, HttpMethod.GET, entity, CurrencyData.class);
             CurrencyData currencyDataResponseBody  = response.getBody();
             CalculateCurrency calculateCurrency = new CalculateCurrency();
 
